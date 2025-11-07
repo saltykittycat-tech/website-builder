@@ -44,4 +44,30 @@ class LeafNode(HTMLNode):
             text = self.value
             final_string = tag_start + text + tag_end
             return final_string
-    
+
+class ParentNode(HTMLNode):
+    def __init__(self, tag = None, children = None, props=None):
+        self.tag = tag
+        self.children = children
+        self.props = props
+        super()
+    def to_html(self):
+        if self.tag == None:
+            raise ValueError("no tag")
+        if self.children == None:
+            raise ValueError("children missing")
+        else:
+            full_string = ""
+            if self.props == None:
+                tag_start = f"<{self.tag}>"
+            else:
+                props = self.props_to_html()
+                tag_start = f"<{self.tag} {props}>"
+            full_string += tag_start
+            for child in self.children:
+                temp_string = child.to_html()
+                full_string += temp_string
+            tag_end = f"</{self.tag}>"
+            final_string = full_string + tag_end
+            return final_string
+        
