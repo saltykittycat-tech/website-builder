@@ -7,10 +7,8 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
             new_nodes.append(node)
         else:
             text = node.text
-            print(f"non split text = {text}")
             listed_text = text.split(delimiter)
             length = len(listed_text)
-            print(f"text split = {listed_text}")
             if length % 2 == 0:
                 raise Exception("invalid markdown syntax")
             else:
