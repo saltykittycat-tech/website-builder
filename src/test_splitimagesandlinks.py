@@ -60,5 +60,12 @@ class TestTextNodeConversion(unittest.TestCase):
         self.maxDiff = None
         self.assertEqual(result, expected)
 
+    def test_noimages_onenode(self):
+        node1= TextNode("this is a text with no images", "PLAIN")
+        result = split_nodes_image([node1])
+        expected = [TextNode("this is a text with no images", "PLAIN")]
+        self.maxDiff = None
+        self.assertEqual(result, expected)
+
 if __name__ == "__main__":
     unittest.main()

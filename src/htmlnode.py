@@ -34,6 +34,11 @@ class LeafNode(HTMLNode):
             raise Exception(ValueError)
         if self.tag == None:
             return self.value
+        elif self.tag == "img":
+            if self.props == None:
+                raise Exception(ValueError)
+            props = self.props_to_html()
+            final_string = f"<{self.tag} {props} />"   
         else:
             if self.props == None:
                 tag_start = f"<{self.tag}>"
@@ -43,7 +48,11 @@ class LeafNode(HTMLNode):
             tag_end = f"</{self.tag}>"
             text = self.value
             final_string = tag_start + text + tag_end
-            return final_string
+        return final_string
+        
+    def __repr__(self):
+        string = f"HTMLNode({self.tag}, {self.value}, {self.props})"
+        return string
 
 class ParentNode(HTMLNode):
     def __init__(self, tag = None, children = None, props=None):
@@ -71,3 +80,6 @@ class ParentNode(HTMLNode):
             final_string = full_string + tag_end
             return final_string
         
+    def __repr__(self):
+        string = f"HTMLNode({self.tag}, {self.children}, {self.props})"
+        return string
