@@ -1,8 +1,8 @@
 from textnode import TextNode
-print("hello world")
+from sourcetodestination import *
+
 
 def main():
-    textnode = TextNode("test text", "LINK", "https://fakeurl")
-    print(textnode)
+    sourcetodestination("static", "public")
 
 main()
