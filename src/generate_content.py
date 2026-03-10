@@ -94,8 +94,10 @@ def generate_content_V2(frm_path, tmplate_path, dst_path, basepath):
     title = extract_title(f_text)
     new_text = t_text.replace("{{ Title }}", title)
     final_text = new_text.replace("{{ Content }}", html_string)
-    finaler_text = final_text.replace('href="/', 'href="{basepath}')
-    finalest_text = finaler_text.replace('src="/', 'src="{basepath}')
+    finaler_text = final_text.replace('href="/', f'href="{basepath}')
+    finalest_text = finaler_text.replace('src="/', f'src="{basepath}')
+    #print(f"finalest_text = {finalest_text}")
+    #print(f"basepath = {basepath}")
     dest_dir_path = os.path.dirname(dest_path)
     if os.path.exists(dest_dir_path) == False:
         os.makedirs(dest_dir_path)
