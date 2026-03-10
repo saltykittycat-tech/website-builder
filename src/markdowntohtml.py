@@ -33,12 +33,18 @@ def block_to_html_node(block, block_type):
         hashtags = re.findall(r"#", block)
         heading_number = len(hashtags)
         heading_tag = f"h{heading_number}"
-        text = block.strip("#")
-        children = text_to_children(text)
+        split_text = block.split(maxsplit=1)
+        text = split_text[1]
+        final_text = text.strip()
+        children = text_to_children(final_text)
         html_node = ParentNode(heading_tag, children)
     elif block_type == "QUOTE":
-        text = block.strip(">")
-        children = text_to_children(text)
+        split_text = block.split(">")
+        text = "".join(split_text)
+        final_text = text.strip()
+        #print(f"quote text:{final_text}")
+        children = text_to_children(final_text)
+        #print(f"children: {children}")
         html_node = ParentNode("blockquote", children)
     elif block_type == "UNORDERED_LIST":
         block_lines = block.split("\n")
@@ -47,7 +53,8 @@ def block_to_html_node(block, block_type):
         for line in block_lines:
             new_line = line.split("-")
             final_line = new_line[1]
-            children = text_to_children(final_line)
+            last_line = final_line.strip()
+            children = text_to_children(last_line)
             node = ParentNode("li", children)
             child_nodes.append(node)
         html_node = ParentNode("ul", child_nodes)
@@ -57,7 +64,8 @@ def block_to_html_node(block, block_type):
         for line in block_lines:
             new_line = line.split(".")
             final_line = new_line[1]
-            children = text_to_children(final_line)
+            last_line = final_line.strip()
+            children = text_to_children(last_line)
             node = ParentNode("li", children)
             child_nodes.append(node)
         html_node = ParentNode("ol", child_nodes)

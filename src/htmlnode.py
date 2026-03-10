@@ -47,7 +47,8 @@ class LeafNode(HTMLNode):
                 tag_start = f"<{self.tag} {props}>"
             tag_end = f"</{self.tag}>"
             text = self.value
-            final_string = tag_start + text + tag_end
+            final_text = text.strip()
+            final_string = tag_start + final_text + tag_end
         return final_string
         
     def __repr__(self):
@@ -75,7 +76,7 @@ class ParentNode(HTMLNode):
             full_string += tag_start
             for child in self.children:
                 temp_string = child.to_html()
-                full_string += temp_string
+                full_string += temp_string 
             tag_end = f"</{self.tag}>"
             final_string = full_string + tag_end
             return final_string
