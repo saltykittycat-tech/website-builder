@@ -27,7 +27,7 @@ def generate_content(frm_path, tmplate_path, dst_path):
     d.write(final_text)
     d.close
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath):
     print(f"recursively generating")
     starting_level = dir_path_content
     starting_level_files = os.listdir(starting_level)
@@ -56,7 +56,7 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
         path_new = os.path.join(dest_dir_path, partial_path_new)
         path_new_class = pathlib.Path(path_new)
         full_path_new = path_new_class.with_suffix(".html")
-        generate_content_V2(md_file, template_path, full_path_new)
+        generate_content_V2(md_file, template_path, full_path_new, basepath)
 
 
 def recursive_pages(dir_path, to_travel, traveled, files):
@@ -78,7 +78,7 @@ def recursive_pages(dir_path, to_travel, traveled, files):
 
 
 
-def generate_content_V2(frm_path, tmplate_path, dst_path):
+def generate_content_V2(frm_path, tmplate_path, dst_path, basepath):
     #print(f"Generating page from {frm_path} to {dst_path} using {tmplate_path}")
     from_path = frm_path
     template_path = tmplate_path
@@ -94,10 +94,12 @@ def generate_content_V2(frm_path, tmplate_path, dst_path):
     title = extract_title(f_text)
     new_text = t_text.replace("{{ Title }}", title)
     final_text = new_text.replace("{{ Content }}", html_string)
+    finaler_text = final_text.replace('href="/', 'href="{basepath}')
+    finalest_text = finaler_text.replace('src="/', 'src="{basepath}')
     dest_dir_path = os.path.dirname(dest_path)
     if os.path.exists(dest_dir_path) == False:
         os.makedirs(dest_dir_path)
     d = open(dest_path, "x")
-    d.write(final_text)
+    d.write(finalest_text)
     d.close
     
